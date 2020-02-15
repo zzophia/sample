@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+        - name: flask
+          image: mjhea0/flask-kubernetes:latest
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: 3l-config

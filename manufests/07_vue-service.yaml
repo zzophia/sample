@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vue
+  labels:
+    service: vue
+  name: vue
+spec:
+  type: ClusterIP
+  selector:
+    app: vue
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: vue
+  externalIPs:
+    - 192.168.11.120
+    - 192.168.11.121
