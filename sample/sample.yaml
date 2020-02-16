@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-test
+  labels:
+    app: nginx-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-test
+  template:
+    metadata:
+      labels:
+        app: nginx-test
+    spec:
+      containers:
+      - name: nginx-test
+        image: registry.gitlab.com/k8slove/3layer-test:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: gitlab-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8999
+      targetPort: 80
+  selector:
+    app: nginx-test
